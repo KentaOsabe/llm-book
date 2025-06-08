@@ -1,0 +1,11 @@
+services:
+  python:
+    build: .
+    container_name: python-3
+    working_dir: /usr/local/llm-book
+    volumes:
+      - /Users/kenta.osabe/work/llm-book:/usr/local/llm-book
+    environment:
+      - OPENAI_API_KEY=
+      - GOOGLE_API_KEY=
+    tty: true

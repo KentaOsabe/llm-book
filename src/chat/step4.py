@@ -1,5 +1,6 @@
 import streamlit as st
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -16,7 +17,8 @@ def create_chain():
             ("human", "{input}"),
         ]
     )
-    return prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    # return prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    return prompt | ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview-05-20")
 
 
 # セッション状態を初期化

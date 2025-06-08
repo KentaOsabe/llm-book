@@ -1,9 +1,11 @@
 import streamlit as st
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_chroma import Chroma
-from langchain_openai import OpenAIEmbeddings
+# from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from operator import itemgetter
 from langchain_core.output_parsers import StrOutputParser
 import base64
@@ -24,7 +26,7 @@ def get_image_description(image_data: str):
             ),
         ]
     )
-    chain = prompt | ChatOpenAI(model="gpt-4o-mini") | StrOutputParser()
+    chain = prompt | ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview-05-20") | StrOutputParser()
     return chain.invoke({"image_data": image_data})
 
 
@@ -55,7 +57,8 @@ def format_docs(docs):
 # チェーンを作成
 def create_chain():
     vectorstore = Chroma(
-        embedding_function=OpenAIEmbeddings(model="text-embedding-3-small"),
+        # embedding_function=OpenAIEmbeddings(model="text-embedding-3-small"),
+        embedding_function=GoogleGenerativeAIEmbeddings(model="models/embedding-001"),
         persist_directory="data",
     )
     retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
@@ -76,7 +79,7 @@ def create_chain():
             "history": itemgetter("history"),
         }
         | prompt
-        | ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        | ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview-05-20", temperature=0)
     )
 
 

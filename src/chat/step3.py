@@ -1,11 +1,13 @@
 import streamlit as st
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 
 # セッション状態を初期化
 if "history" not in st.session_state:
     st.session_state.history = []
-    st.session_state.llm = ChatOpenAI()
+    # st.session_state.llm = ChatOpenAI()
+    st.session_state.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest")
 
 st.title("マルチモーダルRAGチャットボット")
 
